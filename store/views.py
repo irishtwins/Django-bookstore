@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from .models import Book
 
 # Create your views here.
@@ -9,7 +9,7 @@ def index(request):
         'title': 'Mystery Books Home',
         'menu': 'home',
     }
-    return render(request, 'store/index.html')
+    return render(request, 'store/index.html', context)
 
 
 def store(request):
@@ -71,3 +71,62 @@ def new_book(request):
         context['display_form'] = True
 
     return render(request, 'store/book_form.html', context)
+
+
+def edit_book(request, book_id):
+    book = Book.objects.get(id=book_id)
+    context = {
+        'book_id': book.id,
+        'title': 'Edit Book',
+        'menu': 'store',
+        'form_action': 'edit_book',
+        'display_form': False,
+    }
+    if request.method == 'POST':
+        try:
+            book.title = request.POST.get('title')
+            book.author = request.POST.get('author')
+            book.description = request.POST.get('description')
+            book.publish_date = request.POST.get('publish_date')
+            book.price = request.POST.get('price')
+            book.stock = request.POST.get('stock')
+            book.save()
+            context['success_message'] = 'The book has been updated'
+        except:
+            context['book_title'] = request.POST.get('title')
+            context['author'] = request.POST.get('author')
+            context['description'] = request.POST.get('description')
+            context['publish_date'] = request.POST.get('publish_date')
+            context['price'] = request.POST.get('price')
+            context['stock'] = request.POST.get('stock')
+            context['error_message'] = 'Error updating book'
+            context['display_form'] = True
+    else:
+        context['display_form'] = True
+        context['book_title'] = book.title
+        context['author'] = book.author
+        context['description'] = book.description
+        context['publish_date'] = str(book.publish_date)
+        context['price'] = book.price
+        context['stock'] = book.stock
+
+        print(context['description'])
+
+    return render(request, 'store/book_form.html', context)
+
+
+def delete_book(request, book_id):
+    context = {
+        'title': 'The book',
+        'menu': 'store',
+        'hide_book_details': True,
+    }
+    try:
+        book = Book.objects.get(id=book_id)
+        context['title'] = book.title
+        context['book'] = book
+        book.delete()
+        context['title'] += " has been deleted."
+    except:
+        context['title'] += ' could not be deleted.'
+    return render(request, 'store/book_details.html', context)
