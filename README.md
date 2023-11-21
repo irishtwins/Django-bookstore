@@ -1,3 +1,19 @@
 # Django Bookstore
 
-Deployment information: If you excluded the sqlite3 database (db.sqlite3) from Github via gitignore, then you have to recreate your database from scratch. This is common practice, because if you have a business that has data, you don't want to lose those data each time you deploy changes in the code.
+Hosting Link: https://github.com/irishtwins/Django-bookstore
+
+An online bookstore developed in Django which allows users to search/purchase books online.
+
+# User Stories
+
+AS AN online bookstore owner
+I WANT TO utilize this app to help see what customers love ordering
+SO THAT I can order the right quantity based on favoritism
+
+AS A reader/customer
+I WANT TO see what is available to me at a discounted price
+SO THAT I can purchase more online books to read
+
+As AN online bookstore employee
+I WANT TO check on the inventory
+SO THAT I can be have enough books available for our customers
