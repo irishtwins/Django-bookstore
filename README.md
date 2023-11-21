@@ -16,4 +16,4 @@ SO THAT I can purchase more online books to read
 
 As AN online bookstore employee
 I WANT TO check on the inventory
-SO THAT I can be have enough books available for our customers
+SO THAT I can have enough books available for our customers
